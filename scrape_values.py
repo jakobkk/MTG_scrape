@@ -14,3 +14,48 @@ BRO_NUMS = [  3,  5,  6, 11, 16, 17, 19, 22, 22, 23,\
 			248,248,249,251,251,255,258,258,260,260,\
 			261,261,264,266,266,270,275,286]
 BRO_URL = 'https://www.mtggoldfish.com/sets/The+Brothers+War#online'
+BRO_MONEY_DICT = {}
+BRO_HTML = open('The+Brothers+War','r')
+index = BRO_HTML.read()
+S = BeautifulSoup(index, 'lxml')
+rows =  (S.find_all("tr"))
+# print(rows)#S.find_all("td", {"class": "text-right"}))
+header = (S.body.main.\
+	find('div',{'class':'container-fluid layout-container-fluid'}).\
+	find('div',{'data-react-class':'CardsContainer'}).\
+	find('div',{'class':'table-responsive'}).table.thead.tr)
+for ind, i in enumerate(header):
+	# print(i.text)
+	if 'Card Num' in i.text:
+		i_num = (ind)
+	if 'Tabletop Price' in i.text:
+		i_mon = (ind)
+body = (S.body.main.\
+	find('div',{'class':'container-fluid layout-container-fluid'}).\
+	find('div',{'data-react-class':'CardsContainer'}).\
+	find('div',{'class':'table-responsive'}).table.tbody)
+for ind, i in enumerate(body):
+	if ind==0:
+		continue
+	for jind, j in enumerate(i):
+		if jind==i_num:
+			cn_idx = int(j.text)
+			# print(int(j.text),j.text)
+		if jind==i_mon:
+			m_idx =float(j.text[1:]) 
+			# print(float(j.text[1:]), j.text)
+	BRO_MONEY_DICT[cn_idx] = m_idx
+val = 0
+for i in BRO_NUMS: 
+	val += BRO_MONEY_DICT[i]
+print(val)
+# print(header.tr)
+'''
+for i in (S.find_all("tr")):
+	# Traversing the names of the tags
+	for j in i:
+		print(j.text)
+		if '$' in j.text:
+			print(j.text)
+
+'''
