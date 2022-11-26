@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
 
+import re
+
 ##################################################################
 # foils 6,49,106,215,223,248,261
 # borderless 286
@@ -38,7 +40,7 @@ DMU_HTML = open('Dominaria+United','r')
 
 def parse(handle, lut_dict={}):
 	index = handle.read()
-	S = BeautifulSoup(index, 'lxml')
+	S = BeautifulSoup(index, 'html.parser')
 	rows =  (S.find_all("tr"))
 	# print(rows)#S.find_all("td", {"class": "text-right"}))
 	header = (S.body.main.\
@@ -64,15 +66,16 @@ def parse(handle, lut_dict={}):
 				# print(int(j.text),j.text)
 			if jind==i_mon:
 				try:
-					m_idx =float(j.text[1:])
+					m_idx =float(re.sub('[^0-9.]','',j.text))
 				except ValueError:
 					m_idx =0 
-				# print(float(j.text[1:]), j.text)
+				## print(float(re.sub('[^0-9.]','',j.text)), j.text)
 		lut_dict[cn_idx] = m_idx
 	val = 0
 	for i in BRO_NUMS:
 		try: 
-			val += lut_dict[i]
+			if lut_dict[i] > 1:
+				val += lut_dict[i]
 		except KeyError:
 			pass
 	# print(val)
