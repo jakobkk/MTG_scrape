@@ -6,7 +6,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 
-from BRO_cards import _SET_NUMS, BRO, BRO_NAME_TO_NUM
+# from BRO_cards import _SET_NUMS, BRO as CARD_NUMS, BRO_NAME_TO_NUM as SET_NAME_DICT
+from DMU_cards import _SET_NUMS, DMU as CARD_NUMS, DMU_NAME_TO_NUM as SET_NAME_DICT
 
 _BASE_URL = 'https://www.mtgstocks.com/prints/'
 _SET_URL_BASE = 'https://www.mtgstocks.com/sets/'
@@ -69,15 +70,17 @@ if __name__=='__main__':
     load_dict()
     # driver = webdriver.Firefox()
     # scrape_mtg(driver)
-    for cat, card_nums in BRO.items():
-        if cat not in BRO_NAME_TO_NUM.keys():
+    for cat, card_nums in CARD_NUMS.items():
+        if cat not in SET_NAME_DICT.keys():
             continue
         for i in card_nums:
-            if BRO_NAME_TO_NUM[cat][i] in _DICT.keys():
-                # print(i, BRO_NAME_TO_NUM[cat][i], _DICT[BRO_NAME_TO_NUM[cat][i]]['value'])
+            if SET_NAME_DICT[cat][i] in _DICT.keys():
+                if _DICT[SET_NAME_DICT[cat][i]]['value'] > 1:
+                    print(i, SET_NAME_DICT[cat][i], _DICT[SET_NAME_DICT[cat][i]]['value'])
                 pass
             else:
-                print(i,BRO_NAME_TO_NUM[cat][i])
+                # print(i,SET_NAME_DICT[cat][i])
+                pass
     '''
     for i_print_num in []:
         if i_print_num in _DICT.values():
