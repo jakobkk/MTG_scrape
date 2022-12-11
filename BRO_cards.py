@@ -3,20 +3,25 @@ import constants
 # foils 6,49,106,215,223,248,261
 # prerelease 215
 # borderless 286
-BRO_NUMS =      [  3,  5,  6, 11, 16, 17, 19, 22, 22, 23,\
+BRO_NUMS =      [  3,  5,     11, 16, 17, 19, 22, 22, 23,\
 			      28, 28, 32, 37, 37, 41, 43, 44, 44, 46,\
-			      49, 49, 52, 54, 54, 68, 71, 71, 72, 73,\
+			          49, 52, 54, 54, 68, 71, 71, 72, 73,\
 			      73, 76, 77, 90, 91, 91, 93, 93,100,100,\
-			     102,103,103,106,106,106,109,110,116,117,\
+			     102,103,103,    106,106,109,110,116,117,\
                  \
 			     118,118,123,123,124,127,128,129,132,132,\
 			     133,136,136,147,147,152,152,153,153,158,\
 			     159,161,164,166,167,168,173,177,182,182,\
-			     184,184,187,196,197,199,201,208,213,215,\
-			     221,222,223,223,224,235,236,239,239,243,\
+			     184,184,187,196,197,199,201,208,213,    \
+			     221,222,    223,224,235,236,239,239,243,\
                  \
-			     248,248,249,251,251,255,258,258,260,260,\
-			     261,261,264,266,266,270,275,286]
+			     248,    249,251,251,255,258,258,260,260,\
+			     261,    264,266,266,270,275,286,\
+                 {6:{constants.FOIL_ATTR}}, {49:{constants.FOIL_ATTR}},\
+                 {106:{constants.FOIL_ATTR}}, {215:{constants.FOIL_ATTR,constants.PRERELEASE_ATTR}},\
+                 {223:{constants.FOIL_ATTR}}, {248:{constants.FOIL_ATTR}},\
+                 {261:{constants.FOIL_ATTR}},\
+                ]
 # BRO_NUMS = [i for i in range(288,385)]
 BRO_TOKENS =    [  2,  7,  7,  7,  8,  10]
 BRO_ARTIFACTS = [ 15, 15, 15, 23, 45, 51, 58, 58]
@@ -28,11 +33,10 @@ BRO= {constants.MAIN_TYPE: BRO_NUMS,\
       constants.ART_GALLERY_TYPE: BRO_ART,\
      }
 
-_SET_URL = 'https://www.mtgstocks.com/sets/813-the-brothers-war'
-
-_SET_NUMS = {'Base': '813',\
-             'Extras': '1178',\
-             'Artifacts': '1306',\
+SET_NUMS = {constants.BASE_CAT: '813',\
+             constants.EXTRA_CAT: '1178',\
+             constants.ARTIFACT_TYPE: '1306',\
+             constants.ART_GALLERY_TYPE: '1180',\
 }
 
 BRO_CARD_NUM_TO_NAME= {\
@@ -550,7 +554,18 @@ ARTIFACT_NUM_TO_NAME= {\
     125: "Well of Lost Dreams", \
     126: "Wurmcoil Engine ", \
 }
+
+TOKEN_NUM_TO_NAME = {\
+        \
+        }
+
+ART_GALLERY_NUM_TO_NAME = {\
+        \
+        }
+
 BRO_NAME_TO_NUM = {\
-        'Main': BRO_CARD_NUM_TO_NAME,\
-        'Artifact': ARTIFACT_NUM_TO_NAME,\
+        constants.MAIN_TYPE: BRO_CARD_NUM_TO_NAME,\
+        constants.ARTIFACT_TYPE: ARTIFACT_NUM_TO_NAME,\
+        # constants.TOKEN_TYPE: TOKEN_NUM_TO_NAME,\
+        # constants.ART_GALLERY_TYPE: ART_GALLERY_NUM_TO_NAME,\
         }

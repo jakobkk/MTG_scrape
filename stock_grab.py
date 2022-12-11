@@ -6,7 +6,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 
-from BRO_cards import _SET_NUMS, BRO as CARD_NUMS, BRO_NAME_TO_NUM as SET_NAME_DICT
+import constants
+from BRO_cards import SET_NUMS, BRO as CARD_NUMS, BRO_NAME_TO_NUM as SET_NAME_DICT
 # from DMU_cards import _SET_NUMS, DMU as CARD_NUMS, DMU_NAME_TO_NUM as SET_NAME_DICT
 _BASE_URL = 'https://www.mtgstocks.com/prints/'
 _SET_URL_BASE = 'https://www.mtgstocks.com/sets/'
@@ -15,6 +16,7 @@ _UPDATE_PRICE = True
 class MTG_ID_Dict:
     _dict = {}
     _F_NAME = ('mtgmap.json',)
+    updated=False
     def __init__(self):
         try:
             with open(self._F_NAME[0],'r') as json_file:
@@ -36,15 +38,19 @@ class MTG_ID_Dict:
         if not self.check_dict(card_Name):
             self._dict[card_Name] = {}
             self._dict[card_Name][key] = value
+            self.updated = True
         elif key not in self._dict[card_Name].keys():
             self._dict[card_Name][key] = value
+            self.updated = True
         elif _UPDATE_PRICE and (key=='value' or key=='foil_value'):
             self._dict[card_Name][key] = value
+            self.updated = True
         return
 
     def close(self):
-        with open(self._F_NAME[0], 'w') as fp:
-            json.dump(self._dict, fp)
+        if self.updated:
+            with open(self._F_NAME[0], 'w') as fp:
+                json.dump(self._dict, fp)
     def __del__(self):
         try:
             self.close()
@@ -68,7 +74,7 @@ class Sraper:
     def __init__(self,val_dict, **kwargs):
         self._DICT=val_dict
         fireFoxOptions = webdriver.FirefoxOptions()
-        fireFoxOptions.headless = True
+        # fireFoxOptions.headless = True
         self.driver = webdriver.Firefox(options=fireFoxOptions)
         if (('set' in kwargs.keys()) and ('print' in kwargs.keys())):
             # Default to set
@@ -97,27 +103,43 @@ class Sraper:
     def _parse_one_page(self):
         soup = BeautifulSoup(self.driver.page_source, "html.parser")
         cards = soup.find_all('tr')[2:]
+        self._FOIL_COL = ''
+        self._MARKET_COL = ''
+        for idx, i in enumerate(soup.find_all('tr')[0]):
+            if 'Foil Market' in i.text:
+                self._FOIL_COL = str(idx+1)
+            elif 'Market' in i.text:
+                self._MARKET_COL = str(idx+1)
         for i, icard in enumerate(cards):
             # Add card site num to json
             self._DICT.add_to_dict(icard.a.text,'site_num', icard.a['href'][len('/prints/'):icard.a['href'].index('-')])
             try:
-                raw_val = self.driver.find_element(By.XPATH, self._XPATH_TO_FIELD+str(i+1)+']/td['+self._MARKET_COL +']').text
-                raw_foil_val = self.driver.find_element(By.XPATH, self._XPATH_TO_FIELD+str(i+1)+']/td['+self._FOIL_COL +']').text
+                if self._MARKET_COL != '':
+                    raw_val = self.driver.find_element(By.XPATH, self._XPATH_TO_FIELD+str(i+1)+']/td['+self._MARKET_COL +']').text
+                if self._FOIL_COL != '':
+                    raw_foil_val = self.driver.find_element(By.XPATH, self._XPATH_TO_FIELD+str(i+1)+']/td['+self._FOIL_COL +']').text
             except exceptions.NoSuchElementException:
                 #only one page
-                raw_val = self.driver.find_element(By.XPATH,self._XPATH_TO_FIELD_ONE_PAGE+str(i+1)+']/td['+self._MARKET_COL +']').text
-                raw_foil_val = self.driver.find_element(By.XPATH,self._XPATH_TO_FIELD_ONE_PAGE+str(i+1)+']/td['+self._FOIL_COL +']').text
-
-            try:
-                val = float(raw_val[1:])
-            except ValueError:
-                val =0
-            try:
-                foil_val = float(raw_foil_val[1:])
-            except ValueError:
-                foil_val =0
-            self._DICT.add_to_dict(icard.a.text,'value',val)
-            self._DICT.add_to_dict(icard.a.text,'foil_value',foil_val)
+                if self._MARKET_COL != '':
+                    raw_val = self.driver.find_element(By.XPATH,self._XPATH_TO_FIELD_ONE_PAGE+str(i+1)+']/td['+self._MARKET_COL +']').text
+                if self._FOIL_COL != '':
+                    raw_foil_val = self.driver.find_element(By.XPATH,self._XPATH_TO_FIELD_ONE_PAGE+str(i+1)+']/td['+self._FOIL_COL +']').text
+            if self._MARKET_COL != '':
+                try:
+                    val = float(raw_val[1:])
+                except ValueError:
+                    val =0
+            if self._FOIL_COL != '':
+                try:
+                    foil_val = float(raw_foil_val[1:])
+                except ValueError:
+                    foil_val =0
+            if self._MARKET_COL != '':
+                self._DICT.add_to_dict(icard.a.text,'value',val)
+            if self._FOIL_COL != '':
+                self._DICT.add_to_dict(icard.a.text,'foil_value',foil_val)
+            self._DICT.add_to_dict(icard.a.text,'Prerelease',False)
+            self._DICT.add_to_dict(icard.a.text,'Promo',False)
 
     def close(self):
         self.driver.close()
@@ -127,14 +149,23 @@ class Sraper:
 
 if __name__=='__main__':
     DICT = MTG_ID_Dict()
-    Scrape = Sraper(DICT)
-    # for i in _SET_NUMS.values():
-    #     Scrape.scrape_set(i)
+    # Scrape = Sraper(DICT)
+    # for i in SET_NUMS.values():
+    #     if i == '1180':
+    #         Scrape.scrape_set(i)
+    # Scrape.close()
+    # DICT.close()
     for cat, card_nums in CARD_NUMS.items():
         if cat not in SET_NAME_DICT.keys():
             continue
         for i in card_nums:
-            foil = False
+            if type(i) == dict:   
+                for c_num, c_attr in i.items():
+                    foil = constants.FOIL_ATTR in c_attr
+                    j = c_num
+                i=j
+            else:
+                foil=False
             if DICT.check_dict(SET_NAME_DICT[cat][i]):
                 if DICT.check_val(SET_NAME_DICT[cat][i], 1):
                     pass
@@ -143,4 +174,4 @@ if __name__=='__main__':
             else:
                 print(i,SET_NAME_DICT[cat][i])
                 pass
-    DICT.close()    
+        
