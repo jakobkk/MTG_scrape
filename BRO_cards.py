@@ -1,3 +1,5 @@
+import constants
+
 # foils 6,49,106,215,223,248,261
 # prerelease 215
 # borderless 286
@@ -15,20 +17,21 @@ BRO_NUMS =      [  3,  5,  6, 11, 16, 17, 19, 22, 22, 23,\
                  \
 			     248,248,249,251,251,255,258,258,260,260,\
 			     261,261,264,266,266,270,275,286]
+# BRO_NUMS = [i for i in range(288,385)]
 BRO_TOKENS =    [  2,  7,  7,  7,  8,  10]
 BRO_ARTIFACTS = [ 15, 15, 15, 23, 45, 51, 58, 58]
 BRO_ART =       [ 51, 56, 63]
 
-BRO= {'Main': BRO_NUMS,\
-      'Token': BRO_TOKENS,\
-      'Artifact': BRO_ARTIFACTS,\
-      'Art': BRO_ART,\
+BRO= {constants.MAIN_TYPE: BRO_NUMS,\
+      constants.TOKEN_TYPE: BRO_TOKENS,\
+      constants.ARTIFACT_TYPE: BRO_ARTIFACTS,\
+      constants.ART_GALLERY_TYPE: BRO_ART,\
      }
 
 _SET_URL = 'https://www.mtgstocks.com/sets/813-the-brothers-war'
 
 _SET_NUMS = {'Base': '813',\
-             'Extras': '1179',\
+             'Extras': '1178',\
              'Artifacts': '1306',\
 }
 
@@ -50,7 +53,7 @@ BRO_CARD_NUM_TO_NAME= {\
 15: "Mass Production",\
 16: "Meticulous Excavation",\
 17: "Military Discipline",\
-18: "Myrel, Sheild of Argive",\
+18: "Myrel, Shield of Argive",\
 19: "Phalanx Vanguard",\
 20: "Powerstone Engineer",\
 21: "Prison Sentence",\
@@ -89,9 +92,9 @@ BRO_CARD_NUM_TO_NAME= {\
 54: "Keeper of the Cadence",\
 55: "Koilos Roc",\
 56: "Lat-Nam Adept",\
-57: "Machine over Matter",\
+57: "Machine Over Matter",\
 58: "Mightstone's Animation",\
-59: "One With the Multiverse",\
+59: "One with the Multiverse",\
 60: "Retrieval Agent",\
 61: "Scatter Ray",\
 62: "Skystrike Officer",\
@@ -131,12 +134,12 @@ BRO_CARD_NUM_TO_NAME= {\
 96: "Gix's Caress",\
 97: "Gix's Command",\
 98: "Gixian Infiltrator",\
-99: "Gixian Puppeteer",\
+99: "Gxian Puppeteer",\
 100: "Gixian Skullflayer",\
 101: "Gnawing Vermin",\
 102: "Go for the Throat",\
 103: "Gruesome Realization",\
-104: "Gurgling Anointer",\
+104: "The Gurgling Anointer",\
 105: "Hostile Negotiations",\
 106: "Kill-Zone Acrobat",\
 107: "Misery's Shadow",\
@@ -157,7 +160,7 @@ BRO_CARD_NUM_TO_NAME= {\
 122: "Razorlash Transmogrant",\
 123: "Scrapwork Rager",\
 124: "Transmogrant Altar",\
-125: "Transmogrant's Crown",\
+125: "Transmorgrant's Crown",\
 126: "Arms Race",\
 127: "Bitter Reunion",\
 128: "Brotherhood's End",\
@@ -187,7 +190,7 @@ BRO_CARD_NUM_TO_NAME= {\
 152: "Sibling Rivalry",\
 153: "Tomakul Scrapsmith",\
 154: "Tyrant of Kher Ridges",\
-155: "Unleash Shell",\
+155: "Unleah Shell",\
 156: "Visions of Phyrexia",\
 157: "Whirling Strike",\
 158: "Blitz Automaton",\
@@ -206,7 +209,7 @@ BRO_CARD_NUM_TO_NAME= {\
 171: "Blanchwood Armor",\
 172: "Blanchwood Prowler",\
 173: "Burrowing Razormaw",\
-174: "Bushwack",\
+174: "Bushwhack",\
 175: "Citanul Stalwart",\
 176: "Epic Confrontation",\
 177: "Fade from History",\
@@ -252,7 +255,7 @@ BRO_CARD_NUM_TO_NAME= {\
 217: "Mishra, Tamer of Mak Fawa",\
 218: "Queen Kayla bin-Kroog",\
 219: "Saheeli, Filigree Master",\
-220: "Sanrith Great Wurm (Mythic Creature) [awaiting translation]",\
+220: "Sarinth Greatwurm",\
 221: "Skyfisher Spider",\
 222: "Tawnos, the Toymaker",\
 223: "Third Path Iconoclast",\
@@ -297,130 +300,127 @@ BRO_CARD_NUM_TO_NAME= {\
 262: "Fortified Beachhead",\
 263: "Hall of Tagsin",\
 264: "Llanowar Wastes",\
-265: "Mishra's Factory",\
+265: "Mishra's Foundry",\
 266: "Tocasia's Dig Site",\
 267: "Underground River",\
-268: "Plains",\
-269: "Plains",\
+268: "Plains (268)",\
+269: "Plains (269)",\
 270: "Island (270)",\
-271: "Island",\
-272: "Swamp",\
-273: "Swamp",\
-274: "Mountain",\
+271: "Island (271)",\
+272: "Swamp (272)",\
+273: "Swamp (273)",\
+274: "Mountain (274)",\
 275: "Mountain (275)",\
-276: "Forest",\
-277: "Forest",\
-278: "Plains",\
-279: "Plains",\
-280: "Island",\
-281: "Island",\
-282: "Swamp",\
-283: "Swamp",\
-284: "Mountain",\
-285: "Mountain",\
+276: "Forest (276)",\
+277: "Forest (277)",\
+278: "Plains (278) - Full Art",\
+279: "Plains (279) - Full Art",\
+280: "Island (280) - Full Art",\
+281: "Island (281) - Full Art",\
+282: "Swamp (282) - Full Art",\
+283: "Swamp (283) - Full Art",\
+284: "Mountain (284) - Full Art",\
+285: "Mountain (285) - Full Art",\
 286: "Forest (286) - Full Art",\
-287: "Forest",\
+287: "Forest (287) - Full Art",\
+288: "Rescue Retriever",\
+289: "Geology Enthusiast",\
+290: "Terror Ballista",\
+291: "Artificer's Dragon",\
+292: "Woodcaller Automaton",\
+293: "Teferi, Temporal Pilgrim (Borderless)",\
+294: "Saheeli, Filigree Master (Borderless)",\
+295: "Mishra, Tamer of Mak Fawa (Borderless)",\
+296: "Urza, Prince of Kroog (Borderless)",\
+297: "Battlefield Forge (Borderless)",\
+298: "Brushland (Borderless)",\
+299: "Llanowar Wastes (Borderless)",\
+300: "Underground River (Borderless)",\
+301: "In the Trenches (Extended Art)",\
+302: "Kayla's Command (Extended Art)",\
+303: "Kayla's Reconstruction (Extended Art)",\
+304: "Loran of the Third Path (Extended Art)",\
+305: "Myrel, Shield of Argive (Extended Art)",\
+306: "Siege Veteran (Extended Art)",\
+307: "Soul Partition (Extended Art)",\
+308: "Tocasia's Welcome (Extended Art)",\
+309: "Autonomous Assembler (Extended Art)",\
+310: "Platoon Dispenser (Extended Art)",\
+311: "Steel Seraph (Extended Art)",\
+312: "Urza's Sylex (Extended Art)",\
+313: "Drafna, Founder of Lat-Nam (Extended Art)",\
+314: "Hurkyl, Master Wizard (Extended Art)",\
+315: "Hurkyl's Final Meditation (Extended Art)",\
+316: "One with the Multiverse",\
+317: "Skystrike Officer (Extended Art)",\
+318: "Urza's Command (Extended Art)",\
+319: "Arcane Proxy (Extended Art)",\
+320: "Surge Engine (Extended Art)",\
+321: "The Temporal Anchor (Extended Art)",\
+322: "Terisian Mindbreaker (Extended Art)",\
+323: "Ashnod, Flesh Mechanist (Extended Art)",\
+324: "Diabolic Intent (Extended Art)",\
+325: "Fateful Handoff (Extended Art)",\
+326: "Gix, Yawgmoth Praetor (Extended Art)",\
+327: "Gix's Command (Extended Art)",\
+328: "Gxian Puppeteer (Extended Art)",\
+329: "Hostile Negotiations (Extended Art)",\
+330: "Misery's Shadow (Extended Art)",\
+331: "Painful Quandary (Extended Art)",\
+332: "Phyrexian Fleshgorger (Extended Art)",\
+333: "Razorlash Transmogrant (Extended Art)",\
+334: "Transmorgrant's Crown (Extended Art)",\
+335: "Brotherhood's End (Extended Art)",\
+336: "Draconic Destiny (Extended Art)",\
+337: "Feldon, Ronom Excavator (Extended Art)",\
+338: "Mechanized Warfare (Extended Art)",\
+339: "Mishra's Command (Extended Art)",\
+340: "Over the Top (Extended Art)",\
+341: "Tyrant of Kher Ridges (Extended Art)",\
+342: "Visions of Phyrexia (Extended Art)",\
+343: "Skitterbeam Battalion (Extended Art)",\
+344: "Awaken the Woods (Extended Art)",\
+345: "Fade from History (Extended Art)",\
+346: "Fauna Shaman (Extended Art)",\
+347: "Gwenna, Eyes of Gaea (Extended Art)",\
+348: "Teething Wurmlet (Extended Art)",\
+349: "Titania's Command (Extended Art)",\
+350: "Perennial Behemoth (Extended Art)",\
+351: "Rootwire Amalgam (Extended Art)",\
+352: "Simian Simulacrum (Extended Art)",\
+353: "Deathbloom Ritualist (Extended Art)",\
+354: "Hajar, Loyal Bodyguard (Extended Art)",\
+355: "Harbin, Vanguard Aviator (Extended Art)",\
+356: "Legions to Ashes (Extended Art)",\
+357: "Queen Kayla bin-Kroog (Extended Art)",\
+358: "Sarinth Greatwurm (Extended Art)",\
+359: "Tawnos, the Toymaker (Extended Art)",\
+360: "Tocasia, Dig Site Mentor (Extended Art)",\
+361: "Bladecoil Serpent (Extended Art)",\
+362: "Clay Champion (Extended Art)",\
+363: "Cityscape Leveler (Extended Art)",\
+364: "Liberator, Urza's Battlethopter (Extended Art)",\
+365: "Portal to Phyrexia (Extended Art)",\
+366: "The Stasis Coffin (Extended Art)",\
+367: "The Stone Brain (Extended Art)",\
+368: "Thran Spider (Extended Art)",\
+369: "Blast Zone (Extended Art)",\
+370: "Fortified Beachhead (Extended Art)",\
+371: "Hall of Tagsin (Extended Art)",\
+372: "Mishra's Foundry (Extended Art)",\
+373: "Rescue Retriever (Extended Art)",\
+374: "Geology Enthusiast (Extended Art)",\
+375: "Terror Ballista (Extended Art)",\
+376: "Artificer's Dragon (Extended Art)",\
+377: "Woodcaller Automaton (Extended Art)",\
+378: "Mishra's Foundry",\
+379: "Queen Kayla bin-Kroog",\
+380: "Lay Down Arms",\
+381: "Flow of Knowledge",\
+382: "Corrupt",\
+383: "Sardian Cliffstomper",\
+384: "Blanchwood Armor",\
 }
-'''
-Jumpstart Booster Cards
-288: "Rescue Retriever
-289: "Geology Enthusiast
-290: "Terror Ballista
-291: "Artificer's Dragon
-292: "Woodcaller Automaton
-293: "Teferi, Temporal Pilgrim
-294: "Saheeli, Filigree Master
-295: "Mishra, Tamer of Mak Fawa
-296: "Urza, Prince of Kroog
-297: "Battlefield Forge
-298: "Brushland
-299: "Llanowar Wastes
-300: "Underground River
-301: "In the Trenches
-302: "Kayla's Command
-303: "Kayla's Reconstruction
-304: "Loran of the Third Path
-305: "Myrel, Shield of Argive
-306: "Siege Veteran
-307: "Soul Partition
-308: "Tocasia's Welcome
-309: "Autonomous Assembler
-310: "Platoon Dispenser
-311: "Steel Seraph
-312: "Urza's Sylex
-313: "Drafna, Founder of Lat-Nam
-314: "Hurkyl, Master Wizard
-315: "Hurkyl's Final Meditation
-316: "One With the Multiverse
-317: "Skystrike Officer
-318: "Urza's Command
-319: "Arcane Proxy
-320: "Surge Engine
-321: "The Temporal Anchor
-322: "Terisian Mindbreaker
-323: "Ashnod, Flesh Mechanist
-324: "Diabolic Intent
-325: "Fateful Handoff
-326: "Gix, Yawgmoth Praetor
-327: "Gix's Command
-328: "Gixian Puppeteer
-329: "Hostile Negotiations
-330: "Misery's Shadow
-331: "Painful Quandary
-332: "Phyrexian Fleshgorger
-333: "Razorlash Transmogrant
-334: "Transmogrant's Crown
-335: "Brotherhood's End
-336: "Draconic Destiny
-337: "Feldon, Ronom Excavator
-338: "Mechanized Warfare
-339: "Mishra's Command
-340: "Over the Top
-341: "Tyrant of Kher Ridges
-342: "Visions of Phyrexia
-343: "Skitterbeam Battalion
-344: "Awaken the Woods
-345: "Fade from History
-346: "Fauna Shaman
-347: "Gwenna, Eyes of Gaea
-348: "Teething Wurmlet
-349: "Titania's Command
-350: "Perennial Behemoth
-351: "Rootwire Amalgam
-352: "Simian Simulacrum
-353: "Deathbloom Ritualist
-354: "Hajar, Loyal Bodyguard
-355: "Harbin, Vanguard Aviator
-356: "Legions to Ashes
-357: "Queen Kayla bin-Kroog
-358: "Sanrith Great Wurm
-359: "Tawnos, the Toymaker
-360: "Tocasia, Dig Site Mentor
-361: "Bladecoil Serpent
-362: "Clay Champion
-363: "Cityscape Leveler
-364: "Liberator, Urza's Battlethopter
-365: "Portal to Phyrexia
-366: "The Stasis Coffin
-367: "The Stone Brain
-368: "Thran Spider
-369: "Blast Zone
-370: "Fortified Beachhead
-371: "Hall of Tagsin
-372: "Mishra's Foundry
-373: "Rescue Retriever
-374: "Geology Enthusiast
-375: "Terror Ballista
-376: "Artificer's Dragon
-377: "Woodcaller Automaton
-378: "Mishra's Foundry 
-379: "Queen Kayla bin-Kroog 
-380: "Lay Down Arms 
-381: "Flow of Knowledge 
-382: "Corrupt 
-383: "Sardian Cliffstomper 
-384: "Blanchwood Armor 
-'''
 
 ARTIFACT_NUM_TO_NAME= {\
     1: "Adaptive Automaton", \
